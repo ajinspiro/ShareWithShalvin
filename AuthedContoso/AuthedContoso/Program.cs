@@ -9,15 +9,15 @@ builder.Services.AddControllersWithViews();
 
 builder
     .Services
-    .AddIdentityCore<IdentityUser>()
-    .AddUserManager<UserManager<IdentityUser>>()
+    .AddIdentityCore<ApplicationUser>()
+    .AddUserManager<UserManager<ApplicationUser>>()
     .AddRoles<IdentityRole>()
     .AddRoleManager<RoleManager<IdentityRole>>()
-    .AddSignInManager<SignInManager<IdentityUser>>()
+    .AddSignInManager<SignInManager<ApplicationUser>>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     ;
 
-builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer("Server=localhost;Database=AuthedContoso;User Id=sa;Password=12qw!@QWAS;Encrypt=False"));
+builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer("Server=localhost;Database=AuthedContosoShalvin;User Id=sa;Password=12qw!@QWAS;Encrypt=False"));
 
 builder
     .Services

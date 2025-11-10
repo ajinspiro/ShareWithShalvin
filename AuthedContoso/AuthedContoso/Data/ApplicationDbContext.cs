@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuthedContoso.Data;
 
-public class ApplicationDbContext : IdentityDbContext 
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
@@ -17,7 +17,7 @@ public class ApplicationDbContext : IdentityDbContext
     {
         base.OnModelCreating(builder);
 
-        builder.Entity<IdentityUser>().ToTable("Users");
+        builder.Entity<ApplicationUser>().ToTable("Users");
         builder.Entity<Course>().ToTable("Courses", "contoso");
     }
 }
