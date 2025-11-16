@@ -9,7 +9,13 @@ builder.Services.AddControllersWithViews();
 
 builder
     .Services
-    .AddIdentityCore<ApplicationUser>()
+    .AddIdentityCore<ApplicationUser>(option =>
+    {
+        option.Password.RequiredLength = 3;
+        option.Password.RequireUppercase = false;
+        option.SignIn.RequireConfirmedAccount = false;
+        option.SignIn.RequireConfirmedEmail = false;
+    })
     .AddUserManager<UserManager<ApplicationUser>>()
     .AddRoles<IdentityRole>()
     .AddRoleManager<RoleManager<IdentityRole>>()
@@ -19,14 +25,14 @@ builder
 
 builder.Services.AddDbContext<ApplicationDbContext>(x => x.UseSqlServer("Server=localhost;Database=AuthedContosoShalvin;User Id=sa;Password=12qw!@QWAS;Encrypt=False"));
 
-builder
+var auth = builder
     .Services
     .AddAuthentication(IdentityConstants.ApplicationScheme)
-    .AddIdentityCookies(x =>
-    { 
-       
-    })
     ;
+
+auth.AddIdentityCookies();
+auth.AddBearerToken(IdentityConstants.BearerScheme);
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

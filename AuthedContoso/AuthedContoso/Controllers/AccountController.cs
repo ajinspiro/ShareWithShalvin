@@ -13,11 +13,24 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public IActionResult Login(
-        [FromQuery] string username, [FromQuery] string password
+    public async Task<IActionResult> Login(
+         string username, string password,
+         [FromServices] SignInManager<ApplicationUser> signInManager
         )
     {
-        return Ok("super cool");
+        await signInManager.PasswordSignInAsync(username, password, false, false);
+        return Redirect("/Home/Privacy");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> LoginB(
+         string username, string password,
+         [FromServices] SignInManager<ApplicationUser> signInManager
+        )
+    {
+        signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
+        await signInManager.PasswordSignInAsync(username, password, false, false);
+        return new EmptyResult();
     }
 
     public IActionResult Register()
